@@ -116,14 +116,14 @@ Re-running the pipeline is idempotent. Every build uses the same Compose project
 
 ### Jenkins setup
 
-1. **Plugins:** Pipeline, Git, GitHub, JUnit, Credentials Binding, Email Extension, Timestamper.
+1. **Plugins:** Pipeline, Git, GitHub, JUnit, Credentials Binding, Mailer, Timestamper.
 2. **Docker access:** the `jenkins` user must be in the `docker` group (`sudo usermod -aG docker jenkins`, then restart Jenkins).
 3. **Credentials:** *Manage Jenkins → Credentials → Global → Add*:
    - Kind: *Username with password*
    - Username: your Docker Hub username
    - Password: a Docker Hub **access token**
    - ID: `dockerhub-creds`
-4. **Email:** *Manage Jenkins → System → Extended E-mail Notification*. For Gmail, use SMTP server `smtp.gmail.com`, port `465`, SSL, and a Gmail **App Password** as a credential.
+4. **Email:** *Manage Jenkins → System → E-mail Notification*. For Gmail, use SMTP server `smtp.gmail.com`, port `465`, SSL, and a Gmail **App Password** as a credential.
 5. **Job:** *New Item → Pipeline*. Choose *Pipeline script from SCM → Git* and enter this repository's URL. Set the branch to `*/main` and the script path to `Jenkinsfile`. Tick *GitHub hook trigger for GITScm polling*.
 6. **Webhook (optional):** GitHub repo *Settings → Webhooks* → `https://<public-jenkins-url>/github-webhook/`, content type `application/json`. A local Jenkins needs a tunnel such as `ngrok http 8080`. If there is no webhook, the pipeline falls back to Poll SCM every ~2 minutes.
 

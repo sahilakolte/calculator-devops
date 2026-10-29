@@ -22,7 +22,7 @@ pipeline {
         IMAGE_NAME   = "${DOCKERHUB_USR}/calculator-api"
         IMAGE_TAG    = "${BUILD_NUMBER}"
         HOST_PORT    = '8090'
-        NOTIFY_EMAIL = 'sahilakolte@gmail.com'
+        NOTIFY_EMAIL = 'SahilAjaykumar.Kolte@iiitb.ac.in'
     }
 
     stages {
@@ -101,8 +101,9 @@ pipeline {
             // Remove dangling image layers left behind by rebuilds.
             sh 'docker image prune -f || true'
         }
+        // Uses the Mailer plugin's SMTP settings (Manage Jenkins -> System -> E-mail Notification).
         success {
-            emailext(
+            mail(
                 to: "${NOTIFY_EMAIL}",
                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} succeeded.
@@ -113,13 +114,12 @@ Build: ${env.BUILD_URL}"""
             )
         }
         failure {
-            emailext(
+            mail(
                 to: "${NOTIFY_EMAIL}",
                 subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} failed.
 
-Console output: ${env.BUILD_URL}console""",
-                attachLog: true
+Console output: ${env.BUILD_URL}console"""
             )
         }
     }
