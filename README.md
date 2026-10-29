@@ -2,6 +2,9 @@
 
 A Calculator REST API built with **Spring Boot**. A push to GitHub triggers a Jenkins pipeline that builds, tests, containerizes, pushes to Docker Hub and deploys with Docker Compose. No step is manual.
 
+- **GitHub:** https://github.com/sahilakolte/calculator-devops
+- **Docker Hub:** https://hub.docker.com/r/sahilakolte/calculator-api
+
 ```
 GitHub ──(webhook / Poll SCM)──► Jenkins
                                    │ Checkout → Build → Test → Docker Build → Push → Deploy
